@@ -1,0 +1,7 @@
+note over browser:
+Browser makes a POST request to the server containing a JSON object. 
+
+browser -> server: HTTPS POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server -> browser: JSON object
+
+note over browser:

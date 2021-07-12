@@ -1,0 +1,21 @@
+note over browser:
+Browser makes a POST request to the server. The server redirects and askes the browser to do a new HTTP request. The browser reloads the page and makes three additional HTTP requests.
+
+browser -> server: HTTPS POST https://studies.cs.helsinki.fi/exampleapp/new_note
+server -> browser: Redirect and make new requests
+browser -> server: HTTPS GET https://studies.cs.helsinki.fi/exampleapp/notes
+server -> browser: HTML-code
+browser -> server: HTTPS GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server -> browser: main.css
+browser -> server: HTTPS GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server -> browser: main.js
+
+note over browser:
+The browser executes code from the js file and makes a request for JSON data from the server.
+
+server -> browser: HTTPS GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server -> browser: JSON object
+
+note over browser:
+browser executes the event handler
+renders all the notes to display from the JSON object
