@@ -52,7 +52,6 @@ const App = () => {
 
   let highestVotes = votes.indexOf(Math.max(...votes))
 
-  console.log(highestVotes)
 
   return (
     <>
@@ -70,3 +69,5 @@ const App = () => {
 }
 
 export default App
+
+
