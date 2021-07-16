@@ -1,3 +1,5 @@
+import personService from '../services/persons'
+
 const PersonForm = ({newName, setNewName, newNum, setNewNum, persons, setPersons}) => {
 
   const addName = (e) => {
@@ -7,11 +9,22 @@ const PersonForm = ({newName, setNewName, newNum, setNewNum, persons, setPersons
       number: newNum
     }
     if(persons.find(person => person.name === newName)){ 
-      alert( `${newName} is already added to phonebook`)
+      if(window.confirm( `${newName} is already added to phonebook. Do you want to update the number?`)){
+        const newPersonId = ((persons.filter(person => person.name === newName)))[0].id
+        personService.update(newPersonId, newPerson).then(updatedPerson => {
+          setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson))
+        })
+        setNewName('')
+        setNewNum('')
+      }
     } else {
-      setPersons([...persons, newPerson])
-      setNewName('')
-      setNewNum('')
+      personService.create(newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNum('')
+      })
+
     }
   }
 
