@@ -1,6 +1,6 @@
 import personService from '../services/persons'
 
-const Persons = ({filter, persons, setPersons}) => {
+const Persons = ({filter, persons, setPersons, setMessage}) => {
     const showPersons = (filter === '') ?
     persons 
     :
@@ -8,9 +8,28 @@ const Persons = ({filter, persons, setPersons}) => {
 
     const removePerson = (removedPerson) => {
       if(window.confirm(`Do you want to remove ${removedPerson.name}?`)){
-        personService.remove(removedPerson.id).then(removed => {
-          setPersons(persons.filter(removed => removed.id !== removedPerson.id))
-        })
+        personService
+          .remove(removedPerson.id).then(removed => {
+            setPersons(persons.filter(removed => removed.id !== removedPerson.id))
+          }).catch(error => {
+              setMessage(
+                {message: `User has already been removed from the phonebook`,
+                type: "error"          
+                }
+              )
+              setTimeout(() => {
+                setMessage({message: null, type: null})
+              }, 5000)
+            })
+
+        setMessage(
+          {message: `User was removed from the phonebook`,
+          type: "error"          
+          }
+        )
+        setTimeout(() => {
+          setMessage({message: null, type: null})
+        }, 5000)
       }
     }
   
